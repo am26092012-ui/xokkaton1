@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)http://127.0.0.1:5500/z10/index.html# -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodSave — сохраняем еду,создаем выгоду</title>
+    <link href="./FoodSave — сохраняем еду,создаем выгоду_files/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./FoodSave — сохраняем еду,создаем выгоду_files/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 40%, #a5d6a7 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        .navbar-custom {
+            background: rgba(255, 253, 245, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 2px solid rgba(139, 195, 74, 0.2);
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 20px rgba(27, 94, 32, 0.06);
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2e4d2b !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand .brand-icon {
+            background: linear-gradient(145deg, #43a047, #2e7d32);
+            color: #f1f8e9;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px 6px 14px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 0 #1b5e20;
+            transform: rotate(-2deg);
+        }
+
+        .navbar-brand span {
+            color: #558b2f;
+            font-weight: 300;
+        }
+
+        .nav-link {
+            color: #33691e !important;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem !important;
+        }
+
+        .nav-link:hover {
+            background: rgba(67, 160, 71, 0.1);
+            color: #1b5e20 !important;
+        }
+
+        .nav-link.active {
+            background: rgba(67, 160, 71, 0.15);
+            color: #1b5e20 !important;
+        }
+
+        .cart-badge {
+            background: #e53935;
+            color: white;
+            border-radius: 50%;
+            padding: 0.1rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .btn-outline-green {
+            border: 2px solid #43a047;
+            color: #2e7d32;
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            background: transparent;
+        }
+
+        .btn-outline-green:hover {
+            background: #43a047;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(67, 160, 71, 0.3);
+        }
+
+        .btn-green {
+            background: linear-gradient(145deg, #43a047, #2e7d32);
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 0.4rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 0 #1b5e20;
+        }
+
+        .btn-green:hover {
+            background: linear-gradient(145deg, #4caf50, #388e3c);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #1b5e20, 0 4px 16px rgba(46, 125, 50, 0.3);
+            color: white;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .page-title {
+            color: #1b3a1b;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .page-title i {
+            color: #43a047;
+            background: rgba(67, 160, 71, 0.1);
+            padding: 0.6rem;
+            border-radius: 16px;
+        }
+
+        /* ===== БАННЕР ===== */
+        .banner {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(165, 214, 167, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .banner h2 {
+            color: #1b3a1b;
+            font-weight: 700;
+            font-size: 2.2rem;
+        }
+
+        .banner p {
+            color: #558b2f;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0.5rem auto 1.5rem;
+        }
+
+        /* ===== КАРТОЧКИ ПРОДУКТОВ (БЕЗ КАРТИНОК) ===== */
+        .product-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid rgba(165, 214, 167, 0.3);
+            box-shadow: 0 4px 20px rgba(27, 94, 32, 0.04);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(27, 94, 32, 0.1);
+            border-color: rgba(67, 160, 71, 0.3);
+        }
+
+        .product-icon {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            color: #43a047;
+        }
+
+        .product-title {
+            color: #1b3a1b;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-description {
+            color: #558b2f;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price .old-price {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(165, 214, 167, 0.15);
+        }
+
+        .product-tag {
+            font-size: 0.7rem;
+            background: rgba(67, 160, 71, 0.1);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            color: #2e7d32;
+            border: 1px solid rgba(67, 160, 71, 0.1);
+        }
+
+        .btn-add-cart {
+            background: linear-gradient(145deg, #43a047, #2e7d32);
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 0 #1b5e20;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-add-cart:hover {
+            background: linear-gradient(145deg, #4caf50, #388e3c);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #1b5e20;
+            color: white;
+        }
+
+        .btn-add-cart:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #1b5e20;
+        }
+
+        .btn-add-cart.in-cart {
+            background: linear-gradient(145deg, #ef5350, #c62828);
+            box-shadow: 0 3px 0 #b71c1c;
+        }
+
+        .btn-add-cart.in-cart:hover {
+            background: linear-gradient(145deg, #e53935, #b71c1c);
+            box-shadow: 0 5px 0 #b71c1c;
+        }
+
+        /* ===== МОДАЛЬНЫЕ ОКНА ===== */
+        .modal-content {
+            background: rgba(255, 253, 245, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(165, 214, 167, 0.3);
+            border-radius: 2rem;
+        }
+
+        .modal-header {
+            border-bottom: 2px solid rgba(139, 195, 74, 0.15);
+            padding: 1.2rem 1.8rem;
+        }
+
+        .modal-header .modal-title {
+            color: #1b3a1b;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 1.5rem 1.8rem;
+        }
+
+        .modal-footer {
+            border-top: 2px solid rgba(139, 195, 74, 0.15);
+            padding: 1.2rem 1.8rem;
+        }
+
+        .form-control-modal {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1.5px solid #c8e6c9;
+            border-radius: 60px;
+            padding: 0.7rem 1.2rem;
+            color: #1b3a1b;
+            width: 100%;
+        }
+
+        .form-control-modal:focus {
+            border-color: #66bb6a;
+            box-shadow: 0 0 0 4px rgba(102, 187, 106, 0.15);
+            outline: none;
+        }
+
+        /* ===== КОРЗИНА ===== */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(165, 214, 167, 0.15);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-name {
+            color: #1b3a1b;
+            font-weight: 500;
+        }
+
+        .cart-item-price {
+            color: #1b5e20;
+            font-weight: 600;
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1b5e20;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(139, 195, 74, 0.2);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-remove-cart {
+            background: none;
+            border: none;
+            color: #e53935;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-remove-cart:hover {
+            transform: scale(1.2);
+            color: #b71c1c;
+        }
+
+        /* ===== ФУТЕР ===== */
+        .footer-custom {
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            border-top: 2px solid rgba(139, 195, 74, 0.15);
+            color: #558b2f;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* ===== АНИМАЦИЯ ===== */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .pop-animation {
+            animation: pop 0.3s ease;
+        }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.6rem;
+            }
+            .navbar-brand .brand-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1.2rem;
+            }
+            .page-title {
+                font-size: 1.5rem;
+            }
+            .banner h2 {
+                font-size: 1.6rm;
+            }
+            .banner {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-container {
+                padding: 1rem;
+            }
+            .product-card {
+                padding: 1rem;
+            }
+            .product-icon {
+                font-size: 2rem;
+            }
+            .btn-add-cart {
+                font-size: 0.75rem;
+                padding: 0.3rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="" style="">
+    <!-- ===== НАВИГАЦИЯ ===== -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="http://127.0.0.1:5500/z10/index.html#">
+                <span class="brand-icon"><i class="fas fa-utensils"></i></span>
+                Food<span>Save</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="http://127.0.0.1:5500/z10/index.html#"><i class="fas fa-home"></i> Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:5500/z10/index.html#" onclick="showCatalog()"><i class="fas fa-store"></i> Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="http://127.0.0.1:5500/z10/index.html#" onclick="showCart()">
+                            <i class="fas fa-shopping-cart"></i> Корзина
+                            <span class="cart-badge" id="cartCount">2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-green ms-2" onclick="showLogin()">
+                            <i class="fas fa-sign-in-alt"></i> Войти
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-green ms-1" onclick="showRegister()">
+                            <i class="fas fa-user-plus"></i> Регистрация
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <div class="main-container" id="mainContent">
+        <!-- Баннер -->
+        <div class="banner">
+            <h2><i class="fas fa-seedling" style="color: #43a047;"></i> Спасаем еду вместе!</h2>
+            <p>Продукты с истекающим сроком годности — со скидкой до 70%</p>
+            <button class="btn-green px-5 py-3" onclick="showCatalog()">
+                <i class="fas fa-shopping-bag"></i> Смотреть каталог
+            </button>
+        </div>
+
+        <!-- Заголовок каталога -->
+        <div class="page-title">
+            <i class="fas fa-store"></i>
+            Каталог продуктов
+        </div>
+
+        <!-- ===== КАТАЛОГ ПРОДУКТОВ ===== -->
+        <div class="row g-4" id="catalogGrid"><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-bread-slice"></i></div>
+                        <div class="product-title">Хлеб ржаной</div>
+                        <div class="product-description">Свежий ржаной хлеб, срок годности до завтра</div>
+                        <div class="product-price">
+                            45 ₽
+                            <span class="old-price">120 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 62%</span>
+                            <button class="btn-add-cart in-cart" onclick="toggleCart(1)">
+                                <i class="fas fa-check"></i>
+                                В корзине
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-apple-alt"></i></div>
+                        <div class="product-title">Яблоки</div>
+                        <div class="product-description">Сочные яблоки сорта Гала, 1 кг</div>
+                        <div class="product-price">
+                            89 ₽
+                            <span class="old-price">220 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 60%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(2)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-glass-milk"></i></div>
+                        <div class="product-title">Молоко 3.2%</div>
+                        <div class="product-description">Пастеризованное молоко, 1 л</div>
+                        <div class="product-price">
+                            55 ₽
+                            <span class="old-price">110 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 50%</span>
+                            <button class="btn-add-cart in-cart" onclick="toggleCart(3)">
+                                <i class="fas fa-check"></i>
+                                В корзине
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-drumstick-bite"></i></div>
+                        <div class="product-title">Куриное филе</div>
+                        <div class="product-description">Охлаждённое филе куриной грудки, 400 г</div>
+                        <div class="product-price">
+                            150 ₽
+                            <span class="old-price">380 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 61%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(4)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-banana"></i></div>
+                        <div class="product-title">Бананы</div>
+                        <div class="product-description">Спелые бананы, 1 кг</div>
+                        <div class="product-price">
+                            79 ₽
+                            <span class="old-price">160 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 51%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(5)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-utensil-spoon"></i></div>
+                        <div class="product-title">Йогурт греческий</div>
+                        <div class="product-description">Натуральный греческий йогурт, 200 г</div>
+                        <div class="product-price">
+                            65 ₽
+                            <span class="old-price">140 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 54%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(6)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-cucumber"></i></div>
+                        <div class="product-title">Огурцы</div>
+                        <div class="product-description">Свежие огурцы, 500 г</div>
+                        <div class="product-price">
+                            70 ₽
+                            <span class="old-price">150 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 53%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(7)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-tomato"></i></div>
+                        <div class="product-title">Паста томатная</div>
+                        <div class="product-description">Томатная паста, 400 г</div>
+                        <div class="product-price">
+                            55 ₽
+                            <span class="old-price">120 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 54%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(8)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-bowl-rice"></i></div>
+                        <div class="product-title">Рис</div>
+                        <div class="product-description">Рис круглозерный, 800 г</div>
+                        <div class="product-price">
+                            60 ₽
+                            <span class="old-price">130 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 54%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(9)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div><div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas fa-butter"></i></div>
+                        <div class="product-title">Масло сливочное</div>
+                        <div class="product-description">Сливочное масло 82.5%, 200 г</div>
+                        <div class="product-price">
+                            95 ₽
+                            <span class="old-price">210 ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">Скидка 55%</span>
+                            <button class="btn-add-cart " onclick="toggleCart(10)">
+                                <i class="fas fa-plus"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div></div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ВХОДА ===== -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-sign-in-alt" style="color: #43a047;"></i> Вход в FoodSave</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" style="color: #1b3a1b;">Эл. почта</label>
+                        <input type="email" class="form-control-modal" placeholder="example@mail.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" style="color: #1b3a1b;">Пароль</label>
+                        <input type="password" class="form-control-modal" placeholder="••••••••">
+                    </div>
+                    <button class="btn-green w-100 py-2">Войти</button>
+                    <p class="text-center mt-3" style="color: #558b2f;">
+                        Нет аккаунта? <a href="http://127.0.0.1:5500/z10/index.html#" onclick="switchToRegister()" style="color: #43a047; font-weight: 600;">Зарегистрируйтесь</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО РЕГИСТРАЦИИ ===== -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-user-plus" style="color: #43a047;"></i> Регистрация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" style="color: #1b3a1b;">Имя</label>
+                        <input type="text" class="form-control-modal" placeholder="Алексей">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" style="color: #1b3a1b;">Эл. почта</label>
+                        <input type="email" class="form-control-modal" placeholder="example@mail.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" style="color: #1b3a1b;">Пароль</label>
+                        <input type="password" class="form-control-modal" placeholder="Минимум 6 символов">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" style="color: #1b3a1b;">Подтвердите пароль</label>
+                        <input type="password" class="form-control-modal" placeholder="Повторите пароль">
+                    </div>
+                    <button class="btn-green w-100 py-2">Создать аккаунт</button>
+                    <p class="text-center mt-3" style="color: #558b2f;">
+                        Уже есть аккаунт? <a href="http://127.0.0.1:5500/z10/index.html#" onclick="switchToLogin()" style="color: #43a047; font-weight: 600;">Войдите</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО КОРЗИНЫ ===== -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-shopping-cart" style="color: #43a047;"></i> Корзина</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="cartBody">
+                    <p style="color: rgb(85, 139, 47); display: none;" id="emptyCartMsg">Корзина пуста. Добавьте продукты!</p>
+                    <div id="cartItems">
+                    <div class="cart-item">
+                        <div>
+                            <span class="cart-item-name"><i class="fas fa-bread-slice" style="color:#43a047; margin-right:8px;"></i> Хлеб ржаной</span>
+                        </div>
+                        <div>
+                            <span class="cart-item-price">45 ₽</span>
+                            <button class="btn-remove-cart ms-2" onclick="removeFromCart(1)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="cart-item">
+                        <div>
+                            <span class="cart-item-name"><i class="fas fa-glass-milk" style="color:#43a047; margin-right:8px;"></i> Молоко 3.2%</span>
+                        </div>
+                        <div>
+                            <span class="cart-item-price">55 ₽</span>
+                            <button class="btn-remove-cart ms-2" onclick="removeFromCart(3)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                    <div class="cart-total mt-3" id="cartTotal">
+                        <span>Итого:</span>
+                        <span>100 ₽</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary-custom" data-bs-dismiss="modal" style="background:transparent; border:2px solid #66bb6a; color:#2e7d32; border-radius:40px; padding:0.5rem 1.5rem;">Закрыть</button>
+                    <button class="btn-green" onclick="alert(&#39;Спасибо за заказ!&#39;)">
+                        <i class="fas fa-check"></i> Оформить заказ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ФУТЕР ===== -->
+    <div class="container">
+        <div class="footer-custom">
+            <p>
+                <i class="fas fa-leaf" style="color: #43a047;"></i>
+                <strong>FoodSave</strong> — спасаем еду, заботимся о планете
+            </p>
+            <p style="font-size: 0.8rem;">
+                <i class="fas fa-copyright"></i> 2026 FoodSave. Все права защищены.
+            </p>
+        </div>
+    </div>
+
+    <script src="./FoodSave — сохраняем еду,создаем выгоду_files/bootstrap.bundle.min.js"></script>
+    <script>
+        // ===== ДАННЫЕ ПРОДУКТОВ (БЕЗ КАРТИНОК) =====
+        const products = [
+            { id: 1, name: 'Хлеб ржаной', desc: 'Свежий ржаной хлеб, срок годности до завтра', price: 45, oldPrice: 120, icon: 'fa-bread-slice', tag: 'Скидка 62%' },
+            { id: 2, name: 'Яблоки', desc: 'Сочные яблоки сорта Гала, 1 кг', price: 89, oldPrice: 220, icon: 'fa-apple-alt', tag: 'Скидка 60%' },
+            { id: 3, name: 'Молоко 3.2%', desc: 'Пастеризованное молоко, 1 л', price: 55, oldPrice: 110, icon: 'fa-glass-milk', tag: 'Скидка 50%' },
+            { id: 4, name: 'Куриное филе', desc: 'Охлаждённое филе куриной грудки, 400 г', price: 150, oldPrice: 380, icon: 'fa-drumstick-bite', tag: 'Скидка 61%' },
+            { id: 5, name: 'Бананы', desc: 'Спелые бананы, 1 кг', price: 79, oldPrice: 160, icon: 'fa-banana', tag: 'Скидка 51%' },
+            { id: 6, name: 'Йогурт греческий', desc: 'Натуральный греческий йогурт, 200 г', price: 65, oldPrice: 140, icon: 'fa-utensil-spoon', tag: 'Скидка 54%' },
+            { id: 7, name: 'Огурцы', desc: 'Свежие огурцы, 500 г', price: 70, oldPrice: 150, icon: 'fa-cucumber', tag: 'Скидка 53%' },
+            { id: 8, name: 'Паста томатная', desc: 'Томатная паста, 400 г', price: 55, oldPrice: 120, icon: 'fa-tomato', tag: 'Скидка 54%' },
+            { id: 9, name: 'Рис', desc: 'Рис круглозерный, 800 г', price: 60, oldPrice: 130, icon: 'fa-bowl-rice', tag: 'Скидка 54%' },
+            { id: 10, name: 'Масло сливочное', desc: 'Сливочное масло 82.5%, 200 г', price: 95, oldPrice: 210, icon: 'fa-butter', tag: 'Скидка 55%' },
+        ];
+
+        // ===== СОСТОЯНИЕ =====
+        let cart = [];
+        let cartCount = 0;
+
+        // ===== ОТОБРАЖЕНИЕ КАТАЛОГА =====
+        function renderCatalog() {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = '';
+            products.forEach(product => {
+                const inCart = cart.some(item => item.id === product.id);
+                const card = document.createElement('div');
+                card.className = 'col-12 col-sm-6 col-lg-4 col-xl-3';
+                card.innerHTML = `
+                    <div class="product-card">
+                        <div class="product-icon"><i class="fas ${product.icon}"></i></div>
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-description">${product.desc}</div>
+                        <div class="product-price">
+                            ${product.price} ₽
+                            <span class="old-price">${product.oldPrice} ₽</span>
+                        </div>
+                        <div class="product-meta">
+                            <span class="product-tag">${product.tag}</span>
+                            <button class="btn-add-cart ${inCart ? 'in-cart' : ''}" 
+                                    onclick="toggleCart(${product.id})">
+                                <i class="fas ${inCart ? 'fa-check' : 'fa-plus'}"></i>
+                                ${inCart ? 'В корзине' : 'В корзину'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ===== КОРЗИНА =====
+        function toggleCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const index = cart.findIndex(item => item.id === productId);
+            
+            if (index > -1) {
+                cart.splice(index, 1);
+                cartCount--;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+                cartCount++;
+            }
+            
+            updateCartBadge();
+            renderCatalog();
+            renderCartItems();
+        }
+
+        function updateCartBadge() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItems');
+            const totalSpan = document.getElementById('cartTotal').querySelector('span:last-child');
+            const emptyMsg = document.getElementById('emptyCartMsg');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '';
+                emptyMsg.style.display = 'block';
+                totalSpan.textContent = '0 ₽';
+                return;
+            }
+            
+            emptyMsg.style.display = 'none';
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                total += item.price;
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <span class="cart-item-name"><i class="fas ${item.icon}" style="color:#43a047; margin-right:8px;"></i> ${item.name}</span>
+                        </div>
+                        <div>
+                            <span class="cart-item-price">${item.price} ₽</span>
+                            <button class="btn-remove-cart ms-2" onclick="removeFromCart(${item.id})">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            totalSpan.textContent = total + ' ₽';
+        }
+
+        function removeFromCart(productId) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index > -1) {
+                cart.splice(index, 1);
+                cartCount--;
+                updateCartBadge();
+                renderCatalog();
+                renderCartItems();
+            }
+        }
+
+        // ===== МОДАЛЬНЫЕ ОКНА =====
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+        const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+
+        function showLogin() { loginModal.show(); }
+        function showRegister() { registerModal.show(); }
+        function showCart() { 
+            renderCartItems();
+            cartModal.show(); 
+        }
+        function showCatalog() { 
+            document.getElementById('catalogGrid').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchToRegister() {
+            loginModal.hide();
+            setTimeout(() => registerModal.show(), 300);
+        }
+
+        function switchToLogin() {
+            registerModal.hide();
+            setTimeout(() => loginModal.show(), 300);
+        }
+
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
+        renderCatalog();
+        updateCartBadge();
+
+        // Добавляем пару товаров в корзину для демонстрации
+        setTimeout(() => {
+            toggleCart(1);
+            toggleCart(3);
+        }, 500);
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>
